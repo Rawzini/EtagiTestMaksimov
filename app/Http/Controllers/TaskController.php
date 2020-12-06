@@ -92,99 +92,102 @@ class TaskController extends Controller
         $time = $validatedData->validated()['time'] ?? null;
         $subordinate = $validatedData->validated()['subordinate'] ?? null;
 
-        switch ($time) {
-            case null:
-                $matchConditions = [
-                    'responsible_id' => $id,
-                ];
+        $selectString = [
+            'tasks.id as id',
+            'title',
+            'description',
+            'priority',
+            'expirationDate as date',
+            'surname',
+            'name',
+            'patronymic',
+            'status',
+            'responsible_id',
+            'updateDate'
+        ];
+
+        $groupByFuncName = '';
+
+        $tasksBuilder = Task::leftJoin('users', 'tasks.responsible_id', '=', 'users.id')
+            ->select($selectString)
+            ->orderByDesc('updateDate');
+
+        if ($time !== null) {
+            $tasksBuilder = $tasksBuilder
+                ->where('expirationDate', '>=', Carbon::now());
+
+            $groupByFuncName .= 'bydate';
+
+            if ($time !== 0) {
+                $tasksBuilder = $tasksBuilder
+                    ->where('expirationDate', '<=', Carbon::now()->addDays($time));
+            }
+        }
+
+        $whereInConditions = [$id];
+
+        switch ($subordinate) {
+            case 'subordinates':
+                $whereInConditions = app(UserController::class)->getSubordinatesIds($id);
+                $groupByFuncName .= 'byname';
                 break;
-            case 0:
-                $matchConditions = [
-                    'responsible_id' => $id,
-                    ['expirationDate', '>=', Carbon::now()],
-                ];
+            case 'all':
+                array_push($whereInConditions, app(UserController::class)->getAllSubordinatesIds($id));
+                break;
+            case 'my':
                 break;
             default:
-                $matchConditions = [
-                    'responsible_id' => $id,
-                    ['expirationDate', '>=', Carbon::now()],
-                    ['expirationDate', '<=', Carbon::now()->addDays($time)],
-                ];
+                return response()
+                    ->json('Second variable should be \'my\', \'all\', or \'subordinates\'', 400);
                 break;
         }
 
-        $selectString = ['tasks.id as id', 'title', 'description', 'priority', 'expirationDate as date', 'surname', 'name', 'patronymic', 'status', 'responsible_id', 'updateDate'];
+        $tasksBuilder = $tasksBuilder
+            ->whereIn('responsible_id', $whereInConditions);
 
-        if($subordinate === null) {
-            if($time===null) {
-                $tasks = Task::leftJoin('users', 'tasks.responsible_id', '=', 'users.id')
-                    ->where($matchConditions)
-                    ->select($selectString)
-                    ->orderByDesc('updateDate')
-                    ->get();
-                //$tasks = $tasks->concat(['0']);
-            } else{
-                $tasks = Task::leftJoin('users', 'tasks.responsible_id', '=', 'users.id')
-                    ->where($matchConditions)
-                    ->select($selectString)
-                    ->orderByDesc('updateDate')
-                    ->get()
-                    ->groupBy([
-                        function ($item) {
-                            return Carbon::parse($item->date)->format('d-m-Y');
-                        }
-                        ], $preserveKeys = true);
-            }
-        } else {
-            array_shift($matchConditions);
-            switch ($subordinate) {
-                case 'subordinates':
-                    $subordinatesIds = app(UserController::class)->getSubordinatesIds($id);
-                    break;
-                case 'all':
-                    $subordinatesIds = app(UserController::class)->getAllSubordinatesIds($id);
-                    array_unshift($subordinatesIds, $id);
-                    break;
-                default:
-                    return response()
-                        ->json('Second variable should be null, \'all\', or \'subordinates\'', 400);
-                    break;
-            }
+        $tasks = $tasksBuilder->get();
 
-            if ($time === null){
-                $tasks = Task::whereIn('responsible_id', $subordinatesIds)
-                    ->leftJoin('users', 'tasks.responsible_id', '=', 'users.id')
-                    ->select($selectString)
-                    ->orderByDesc('updateDate')
-                    ->get()
-                    ->groupBy([
-                        function ($item) {
-                            return $item['surname'].' '.$item['name'].' '.$item['patronymic'];
-                        }
-                    ], $preserveKeys = true);
-                //$tasks = $tasks->concat(['1']);
-            } else {
-                $tasks = Task::leftJoin('users', 'tasks.responsible_id', '=', 'users.id')
-                    ->where($matchConditions)
-                    ->select($selectString)
-                    ->whereIn('responsible_id', $subordinatesIds)
-                    ->orderByDesc('updateDate')
-                    ->get()
-                    ->groupBy([
-                        function ($item) {
-                            return Carbon::parse($item->date)->format('d-m-Y');
-                        },
-                        function ($item) {
-                            return $item['surname'].' '.$item['name'].' '.$item['patronymic'];
-                        }
-                    ], $preserveKeys = true);
-                //$tasks = $tasks->concat(['2']);
-            }
+        function bydatebyname($item) {
+            return $item->groupBy([
+                function ($item) {
+                    return Carbon::parse($item->date)->format('d-m-Y');
+                },
+                function ($item) {
+                    return $item['surname'].' '.$item['name'].' '.$item['patronymic'];
+                }
+            ], $preserveKeys = true);
+        }
+
+        function byname($item) {
+            return $item->groupBy([
+                function ($item) {
+                    return $item['surname'].' '.$item['name'].' '.$item['patronymic'];
+                }
+            ], $preserveKeys = true);
+        }
+
+        function bydate($item) {
+            return $item->groupBy([
+                function ($item) {
+                    return Carbon::parse($item->date)->format('d-m-Y');
+                }
+            ], $preserveKeys = true);
+        }
+
+        switch ($groupByFuncName) {
+            case 'bydatebyname':
+                $tasks = bydatebyname($tasks);
+                break;
+            case 'byname':
+                $tasks = byname($tasks);
+                break;
+            case 'bydate':
+                $tasks = bydate($tasks);
+                break;
         }
 
         if ($tasks->isEmpty())
             return response()->json('Data not found', 404);
-
 
         return response()
             ->json($tasks, 200, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);

@@ -29,7 +29,7 @@ export default class Buttons extends Component {
             button1: 'За все время',
             button1value: '',
             button2: 'Мои задачи',
-            button2value: '',
+            button2value: 'my',
         }
 
         this.onButton1Click = this.onButton1Click.bind(this);
@@ -91,7 +91,7 @@ export default class Buttons extends Component {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                    <Dropdown.Item className={this.isActive2('Мои задачи')} onClick={(e) => this.onButton2Click(e, '')}>Мои задачи</Dropdown.Item>
+                    <Dropdown.Item className={this.isActive2('Мои задачи')} onClick={(e) => this.onButton2Click(e, 'my')}>Мои задачи</Dropdown.Item>
                     <Dropdown.Item className={this.isActive2('Задачи подчиненных')} onClick={(e) => this.onButton2Click(e, 'subordinates')}>Задачи подчиненных</Dropdown.Item>
                     <Dropdown.Item className={this.isActive2('Все доступные задачи')} onClick={(e) => this.onButton2Click(e, 'all')}>Все доступные задачи</Dropdown.Item>
                 </Dropdown.Menu>

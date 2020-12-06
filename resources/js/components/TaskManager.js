@@ -42,7 +42,7 @@ export default class TaskManager extends Component {
             headTasksIds: '',
             level: 0,
             button1Value: '',
-            button2Value: '',
+            button2Value: 'my',
             showModal: false,
             taskItem: false,
             showSpinner: false,
@@ -61,7 +61,7 @@ export default class TaskManager extends Component {
                 showSpinner: true
             });
         });
-        GetData('http://localhost:8000/api/tasks/' + id, '', (res) => {
+        GetData('http://localhost:8000/api/tasks/' + id, 'subordinate=my', (res) => {
             this.setState({
                 tasks: res,
                 showSpinner: false
@@ -90,6 +90,9 @@ export default class TaskManager extends Component {
                 }
             }
         }
+        this.setState({
+            showSpinner: false
+        });
     }
 
     onChangeList (value1, value2){
@@ -97,6 +100,7 @@ export default class TaskManager extends Component {
         this.setState({
             showSpinner: true
         }, () =>{
+            console.log(value1, value2)
             GetData('http://localhost:8000/api/tasks/' + id,
                 'time='+value1+'&subordinate='+value2,
                 (res) => {
@@ -171,7 +175,7 @@ export default class TaskManager extends Component {
             )
         }
 
-        if (!this.state.button1Value && !this.state.button2Value) {
+        if (!this.state.button1Value && (this.state.button2Value === 'my' || this.state.button2Value === 'all')) {
             return(
                 <React.Fragment>
                     <tbody key={1}>
@@ -182,7 +186,7 @@ export default class TaskManager extends Component {
                 </React.Fragment>
             )
         } else {
-            if ((this.state.button1Value && this.state.button2Value)) {
+            if ((this.state.button1Value && (this.state.button2Value === 'subordinates'))) {
                 return(
                     <React.Fragment>
                         {Object.keys(tasks).map(key1 =>
