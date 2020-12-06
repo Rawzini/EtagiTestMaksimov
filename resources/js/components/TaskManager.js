@@ -82,15 +82,6 @@ export default class TaskManager extends Component {
                 });
             } else {
                 if (e.target.id === 'updateTask') {
-                    // let taskArray = e.target.attributes['data'].value.split('#separator#')
-                    // let task = {}
-                    // task['id'] = taskArray[0]
-                    // task['title'] = taskArray[1]
-                    // task['description'] = taskArray[2]
-                    // task['expirationDate'] = taskArray[3]
-                    // task['priority'] = taskArray[4]
-                    // task['responsible_id'] = taskArray[5]
-                    // task['status'] = taskArray[6]
                     task['expirationDate'] = task['date']
                     this.setState({
                         taskItem: task,
@@ -159,15 +150,6 @@ export default class TaskManager extends Component {
             return(
                 <Button id='updateTask'
                         key={task.id}
-                        // data = {
-                        //     task.id+'#separator#'+
-                        //     task.title+'#separator#'+
-                        //     task.description+'#separator#'+
-                        //     task.date+'#separator#'+
-                        //     task.priority+'#separator#'+
-                        //     task.responsible_id+'#separator#'+
-                        //     task.status+'#separator#'
-                        // }
                         onClick= {(e) => this.handleModal(e, task)}
                         className='editButton'
                         variant='outline-primary'
