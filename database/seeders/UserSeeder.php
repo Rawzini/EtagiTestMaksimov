@@ -16,12 +16,12 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'Иван',
-            'surname' => 'Иванов',
+            'name' => 'Эльдар',
+            'surname' => 'Джарахов',
             'patronymic' => 'Иванович',
-            'login' => 'ivan',
+            'login' => 'superELDAR',
             'password' => Hash::make('11111111'),
-            'leader_id' => '1',
+            'leader_id' => null,
         ]);
 
         DB::table('users')->insert([
@@ -34,30 +34,21 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name' => 'Василий',
-            'surname' => 'Васильев',
-            'patronymic' => 'Васильевич',
-            'login' => 'vasya',
+            'name' => 'Кин',
+            'surname' => 'По',
+            'patronymic' => 'Ан',
+            'login' => 'kin',
             'password' => Hash::make('11111111'),
             'leader_id' => '2',
         ]);
 
         DB::table('users')->insert([
             'name' => 'Евгений',
-            'surname' => 'Евгеньев',
-            'patronymic' => 'Евгеньевич',
+            'surname' => 'Петросян',
+            'patronymic' => 'Ваганович',
             'login' => 'zhenya',
             'password' => Hash::make('11111111'),
             'leader_id' => '3',
-        ]);
-
-        DB::table('users')->insert([
-            'name' => 'Александр',
-            'surname' => 'Александров',
-            'patronymic' => 'Александрович',
-            'login' => 'sasha',
-            'password' => Hash::make('11111111'),
-            'leader_id' => '1',
         ]);
 
         DB::table('users')->insert([
@@ -65,6 +56,15 @@ class UserSeeder extends Seeder
             'surname' => 'Ибрагимов',
             'patronymic' => 'Ибрагимович',
             'login' => 'ibra',
+            'password' => Hash::make('11111111'),
+            'leader_id' => '1',
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Александр',
+            'surname' => 'Александров',
+            'patronymic' => 'Александрович',
+            'login' => 'sasha',
             'password' => Hash::make('11111111'),
             'leader_id' => '5',
         ]);

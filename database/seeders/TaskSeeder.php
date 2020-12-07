@@ -15,8 +15,8 @@ class TaskSeeder extends Seeder
     public function run()
     {
         DB::table('tasks')->insert([
-            'title' => 'Похвалить себя за то, какой я молодец',
-            'description' => 'Каждый шаг по направлению к достижению своих целей, даже самый мелкий, заслуживает похвалы. Хвали себя чаще, так ты достигнешь необходимой мотивации.',
+            'title' => 'Похвалить себя',
+            'description' => 'Каждый шаг по направлению к достижению своих целей, даже самый мелкий, заслуживает похвалы, так ты достигнешь необходимой мотивации.',
             'expirationDate' => '2020-12-04 13:00:00',
             'dateOfCreation' => '2020-11-01 13:00:00',
             'updateDate' => '2020-11-01 13:00:00',
@@ -29,13 +29,38 @@ class TaskSeeder extends Seeder
         DB::table('tasks')->insert([
             'title' => 'Написать тестовое задание',
             'description' => 'Написать тестовое задание, используя фреймворк laravel и библиотеку ReactJS',
-            'expirationDate' => '2020-12-04 13:00:00',
-            'dateOfCreation' => '2020-11-01 13:00:00',
-            'updateDate' => '2020-11-01 13:00:00',
+            'expirationDate' => '2020-12-07 13:00:00',
+            'dateOfCreation' => '2020-11-28 13:00:00',
+            'updateDate' => '2020-12-06 19:43:00',
             'priority' => 'high',
-            'status' => 'not completed',
+            'status' => 'completed',
             'creator_id' => '1',
             'responsible_id' => '2',
+        ]);
+
+        DB::table('tasks')->insert([
+            'title' => 'Купить ксерокс',
+            'description' => 'Вещь нужная!',
+            'expirationDate' => '2020-12-07 01:00:00',
+            'dateOfCreation' => '2020-11-11 00:00:00',
+            'updateDate' => '2020-12-06 19:43:00',
+            'priority' => 'high',
+            'status' => 'completed',
+            'creator_id' => '1',
+            'responsible_id' => '2',
+        ]);
+
+
+        DB::table('tasks')->insert([
+            'title' => 'Прочитать "Властелин колец" в оригинале',
+            'description' => 'Нет лучшего способа заставить мозг работать настолько усердно, что аж кончается кислород в крови, чем изучение иностранного языка!',
+            'expirationDate' => '2021-01-07 01:00:00',
+            'dateOfCreation' => '2020-11-11 00:00:00',
+            'updateDate' => '2020-12-06 19:43:00',
+            'priority' => 'high',
+            'status' => 'completed',
+            'creator_id' => '1',
+            'responsible_id' => '5',
         ]);
 
         DB::table('tasks')->insert([
@@ -47,19 +72,19 @@ class TaskSeeder extends Seeder
             'priority' => 'low',
             'status' => 'not completed',
             'creator_id' => '1',
-            'responsible_id' => '2',
+            'responsible_id' => '5',
         ]);
 
         DB::table('tasks')->insert([
-            'title' => 'Сходить за хлебом',
-            'description' => 'Купить булку Бородинского',
-            'expirationDate' => '2020-12-20 13:00:00',
-            'dateOfCreation' => '2020-11-01 13:00:00',
+            'title' => 'Купить новогоднюю елку',
+            'description' => 'Без ёлки Новый Год - просто отстой! Обязательно нужно купить ёлку!',
+            'expirationDate' => '2020-12-31 18:00:00',
+            'dateOfCreation' => '2020-12-31 13:00:00',
             'updateDate' => '2020-11-01 13:00:00',
             'priority' => 'high',
-            'status' => 'completed',
-            'creator_id' => '2',
-            'responsible_id' => '3',
+            'status' => 'not completed',
+            'creator_id' => '1',
+            'responsible_id' => '2',
         ]);
 
         DB::table('tasks')->insert([
@@ -75,32 +100,32 @@ class TaskSeeder extends Seeder
         ]);
 
         DB::table('tasks')->insert([
-            'title' => 'Сформировать таблицу по химчисткам',
-            'description' => 'Найти самую выгодную химчистку',
-            'expirationDate' => '2020-12-10 13:00:00',
-            'dateOfCreation' => '2020-11-01 13:00:00',
+            'title' => 'Заняться йогой для укрепления тела и духа',
+            'description' => 'В здоровом теле - здоровый дух!',
+            'expirationDate' => '2020-12-07 13:00:00',
+            'dateOfCreation' => '2020-12-06 13:00:00',
             'updateDate' => '2020-11-01 13:00:00',
             'priority' => 'high',
-            'status' => 'not completed',
-            'creator_id' => '3',
-            'responsible_id' => '4',
+            'status' => 'completed',
+            'creator_id' => '2',
+            'responsible_id' => '2',
         ]);
 
         DB::table('tasks')->insert([
             'title' => 'Придумать какими данными заполнить тестовую таблицу',
-            'description' => 'Нужно сесть и написать набор для заполнения тестовой базы данных, чтобы имметь возможность тестировать функции',
+            'description' => 'Нужно сесть и написать набор данных для заполнения тестовой базы данных, чтобы иметь возможность тестировать функции',
             'expirationDate' => '2020-12-12 13:00:00',
             'dateOfCreation' => '2020-11-01 13:00:00',
             'updateDate' => '2020-11-01 13:00:00',
             'priority' => 'high',
             'status' => 'not completed',
-            'creator_id' => '1',
-            'responsible_id' => '5',
+            'creator_id' => '2',
+            'responsible_id' => '3',
         ]);
 
         DB::table('tasks')->insert([
             'title' => 'Сделать домашку по матеше',
-            'description' => 'математику уже затем учить надо, что она ум в порядок приводит',
+            'description' => 'математику уже затем учить надо, что она ум в порядок приводит, сиди, делай!',
             'expirationDate' => '2020-12-13 13:00:00',
             'dateOfCreation' => '2020-11-01 13:00:00',
             'updateDate' => '2020-11-01 13:00:00',
@@ -108,6 +133,30 @@ class TaskSeeder extends Seeder
             'status' => 'completed',
             'creator_id' => '5',
             'responsible_id' => '6',
+        ]);
+
+        DB::table('tasks')->insert([
+            'title' => 'Сформировать таблицу по химчисткам',
+            'description' => 'Найти самую выгодную химчистку',
+            'expirationDate' => '2020-12-13 13:00:00',
+            'dateOfCreation' => '2020-11-01 13:00:00',
+            'updateDate' => '2020-11-01 13:00:00',
+            'priority' => 'high',
+            'status' => 'completed',
+            'creator_id' => '3',
+            'responsible_id' => '4',
+        ]);
+
+        DB::table('tasks')->insert([
+            'title' => 'Придумать какими данными заполнить тестовую таблицу',
+            'description' => 'Все понятно!',
+            'expirationDate' => '2020-12-13 13:00:00',
+            'dateOfCreation' => '2020-11-01 13:00:00',
+            'updateDate' => '2020-11-01 13:00:00',
+            'priority' => 'high',
+            'status' => 'completed',
+            'creator_id' => '3',
+            'responsible_id' => '4',
         ]);
     }
 }
