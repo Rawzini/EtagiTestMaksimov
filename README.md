@@ -1,3 +1,27 @@
 ## EtagiTestMaksimov
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+В приложении существуют следуюшие пользователи:
+
+Главный руководитель:
+superELDAR
+11111111
+
+Первый заместитель руководителя:
+petr
+11111111
+
+Подчиненный первого заместителя, руководитель младшего специалиста:
+kin
+11111111
+
+Младший специалист:
+zhenya
+11111111
+
+Второй заместитель руководителя:
+ibra
+11111111
+
+Подчиненный второго заместителя
+sasha
+11111111
