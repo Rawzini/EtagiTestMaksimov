@@ -132,7 +132,8 @@ class TaskController extends Controller
                 $groupByFuncName .= 'byname';
                 break;
             case 'all':
-                array_push($whereInConditions, app(UserController::class)->getAllSubordinatesIds($id));
+                $whereInConditions = app(UserController::class)->getAllSubordinatesIds($id);
+                array_push($whereInConditions, $id);
                 break;
             case 'my':
                 break;
