@@ -112,13 +112,13 @@ class TaskController extends Controller
             ->select($selectString)
             ->orderByDesc('updateDate');
 
-        if ($time !== null) {
+        if ($time != null) {
             $tasksBuilder = $tasksBuilder
                 ->where('expirationDate', '>=', Carbon::now());
 
             $groupByFuncName .= 'bydate';
 
-            if ($time !== 0) {
+            if ($time != 0) {
                 $tasksBuilder = $tasksBuilder
                     ->where('expirationDate', '<=', Carbon::now()->addDays($time));
             }
